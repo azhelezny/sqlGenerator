@@ -1,8 +1,10 @@
 package com.lohika.tests;
 
+import com.lohika.FileUtils;
 import com.lohika.PatternChanger;
 import com.lohika.TestPattern;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -51,7 +53,12 @@ public class LengthWidthTest {
                     changes.put("[VALUE2]", getRandomValue());
                     changes.put("[WIDTH]", String.valueOf(wi));
                     changes.put("[LENGTH]", String.valueOf(le));
-                    System.out.println(PatternChanger.changePattern(TestPattern.LENGTH_WIDTH_TEST_PATTERN, changes));
+                   // System.out.println(PatternChanger.changePattern(TestPattern.LENGTH_WIDTH_TEST_PATTERN, changes));
+                    try {
+                        FileUtils.writeStringsToFile(PatternChanger.changePattern(TestPattern.LENGTH_WIDTH_TEST_PATTERN, changes), "/Users/Pavel/ideaProjects/sqlGenerator/sqls");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
