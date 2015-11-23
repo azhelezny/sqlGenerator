@@ -7,10 +7,10 @@ public class TestPattern {
     public static String LENGTH_WIDTH_TEST_PATTERN =
                 "-- ---------------------------------------------------------------------------\n" +
                 "-- (Width/Length)\n" +
-                "-- (WIDTH/LENGTH)\n" +
-                "-- ---------------------------------------------------------------------------" +
-                "drop table if exists TABLE_NAME_TABLE_INDEX;\n" +
-                "create table TABLE_NAME_INDEX(column_COLUMN_INDEX DATA_TYPE);\n" +
+                "-- ([WIDTH]/[LENGTH])\n" +
+                "-- ---------------------------------------------------------------------------\n" +
+                "drop table if exists [TABLE_NAME]_[TABLE_INDEX];\n" +
+                "create table [TABLE_NAME]_[TABLE_INDEX](column_[COLUMN_INDEX] [DATA_TYPE]);\n" +
                 "\n" +
                 "-- Insert\n" +
                 "\n" +
@@ -18,18 +18,18 @@ public class TestPattern {
                 "\n" +
                 "-- DML part\n" +
                 "\n" +
-                "select * from TABLE_NAME_TABLE_INDEX;\n" +
+                "select * from [TABLE_NAME]_[TABLE_INDEX];\n" +
                 "\n" +
                 "-- Update\n" +
                 "\n" +
-                "update TABLE_NAME_TABLE_INDEX set column_COLUMN_INDEX = VALUE where column_COLUMN_INDEX = VALUE\n" +
-                "select * from TABLE_NAME_TABLE_INDEX;\n" +
+                "update [TABLE_NAME]_[TABLE_INDEX] set column_[COLUMN_INDEX] = [VALUE1] where column_[COLUMN_INDEX] = [VALUE2]\n" +
+                "select * from [TABLE_NAME]_[TABLE_INDEX];\n" +
                 "\n" +
                 "-- Drop check\n" +
                 "\n" +
-                "drop table TABLE_NAME_TABLE_INDEX;\n" +
+                "drop table [TABLE_NAME]_[TABLE_INDEX];\n" +
                 "\n" +
                 "-- check if dropped\n" +
-                "select * from TABLE_NAME_TABLE_INDEX;\n" +
-                "-- ERROR 42X05: Table/View 'TABLE_NAME_TABLE_INDEX' does not exist.";
+                "select * from [TABLE_NAME]_[TABLE_INDEX];\n" +
+                "-- ERROR 42X05: Table/View '[TABLE_NAME]_[TABLE_INDEX]' does not exist.";
 }
