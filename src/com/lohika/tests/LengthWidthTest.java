@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
  */
 public class LengthWidthTest {
     private static String path = System.getProperty("user.dir") + "/generatedSQLs/LengthTest/";
-    private static String[] types = {"smallint"};
+    private static String[] types = {"smallint", "bigint", "integer"};
 
-    private static String[] values = {"null", "1", "10"};
+    private static String[] values = {"null", "1", "10", "1000", "0"};
 
     private static int[] length = {1, 100, 1000000, 1000000000};
     private static int[] width = {1, 5, 1012};
