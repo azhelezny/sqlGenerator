@@ -18,9 +18,12 @@ public class FileUtils {
         })));
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void writeStringsToFile(String str, String filePath) throws IOException {
         File file = new File(filePath);
         file.getParentFile().mkdirs();
+        if (file.exists())
+            file.delete();
         PrintWriter fw = null;
         try {
             fw = new PrintWriter(new BufferedWriter(new FileWriter(file, file.exists())));
