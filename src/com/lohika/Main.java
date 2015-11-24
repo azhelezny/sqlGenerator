@@ -1,13 +1,17 @@
 package com.lohika;
 
+import com.lohika.inserts.BigintInsert;
 import com.lohika.tests.LengthWidthTest;
+import com.lohika.tests.MaxWidthTest;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
         //String pattern = TestPattern.LENGTH_WIDTH_TEST_PATTERN;
-        LengthWidthTest.createTests();
+        //LengthWidthTest.createTests();
+        BigintInsert ins = new BigintInsert("pishj");
+        MaxWidthTest.createTests();
 
 
     }
