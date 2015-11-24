@@ -10,11 +10,11 @@ public class TestPattern {
                 "-- ([WIDTH]/[LENGTH])\n" +
                 "-- ---------------------------------------------------------------------------\n" +
                 "drop table if exists [TABLE_NAME]_[TABLE_INDEX];\n" +
-                "create table [TABLE_NAME]_[TABLE_INDEX](column_[COLUMN_INDEX] [DATA_TYPE]);\n" +
+                "create table [TABLE_NAME]_[TABLE_INDEX]([COLUMNS]);\n" +
                 "\n" +
                 "-- Insert\n" +
                 "\n" +
-                "INSERT_STATEMENT\n" +
+                "[INSERT_STATEMENT]\n" +
                 "\n" +
                 "-- DML part\n" +
                 "\n" +
@@ -22,7 +22,7 @@ public class TestPattern {
                 "\n" +
                 "-- Update\n" +
                 "\n" +
-                "update [TABLE_NAME]_[TABLE_INDEX] set column_[COLUMN_INDEX] = [VALUE1] where column_[COLUMN_INDEX] = [VALUE2]\n" +
+                "update [TABLE_NAME]_[TABLE_INDEX] set column_1 = [VALUE1] where column_1 = [VALUE2];\n" +
                 "select * from [TABLE_NAME]_[TABLE_INDEX];\n" +
                 "\n" +
                 "-- Drop check\n" +
