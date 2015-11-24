@@ -1,5 +1,7 @@
 package com.lohika.inserts;
 
+import com.lohika.types.DataType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -46,4 +48,22 @@ public abstract class AbstractInsert {
         return String.format("INSERT INTO %s (SELECT * FROM %s);", tableName, tableName);
     }
 
+    public static AbstractInsert getInsert(String tableName, DataType type) {
+        switch (type) {
+            case SMALLINT:
+                return new SmallintInsert(tableName);
+            case INTEGER:
+                return new IntegerInsert(tableName);
+            case BIGINT:
+                return new BigintInsert(tableName);
+            case REAL:
+                return new RealInsert(tableName);
+            case DOUBLE:
+                return new DoubleInsert(tableName);
+            case FLOAT:
+                return new FloatInsert(tableName);
+            default:
+                throw new AssertionError("unable to find insert statement for type " + type.toString());
+        }
+    }
 }
