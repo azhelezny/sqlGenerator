@@ -73,9 +73,13 @@ public abstract class AbstractInsert {
             case TIMESTAMP:
                 return new TimestampInsert(tableName);
             case CHAR:
-            case VARCHAR:
             case LONG_VARCHAR:
                 return new CharInsert(tableName);
+            case CHAR_FOR_BIT_DATA:
+            case LONG_VARCHAR_FOR_BIT_DATA:
+                return new CharForBitData(tableName);
+            case BOOLEAN:
+                return new BooleanInsert(tableName);
             default:
                 throw new AssertionError("unable to find insert statement for type " + type.toString());
         }
@@ -86,6 +90,9 @@ public abstract class AbstractInsert {
             case CHAR:
             case VARCHAR:
                 return new CharInsert(tableName, size);
+            case CHAR_FOR_BIT_DATA:
+            case VARCHAR_FOR_BIT_DATA:
+                return new CharForBitData(tableName, size);
             default:
                 throw new AssertionError("unable to find insert statement for type " + type.toString());
         }

@@ -13,7 +13,6 @@ public class CharInsert extends AbstractInsert {
     public CharInsert(String tableName, int size) {
         super(tableName);
         fill(size);
-
     }
 
     private void fill(int size) {
@@ -43,7 +42,7 @@ public class CharInsert extends AbstractInsert {
             add("'O'");
             add("'`'");
         }
-        if (size < 100 && size >= 10) {
+        if (size < 130 && size >= 10) {
             add("';s%>O:c-nq'");
             add("'b,a3o{H/5a'");
             add("'Uf2.Pa(|ms'");
@@ -68,7 +67,7 @@ public class CharInsert extends AbstractInsert {
             add("'O9l=l@1Z?0'");
             add("'`2odSK6cP|'");
         }
-        if (size > 100) {
+        if (size >= 130) {
             add("';s%>O:c-n,_RTOE;+^^7<ewwH4Au%&-~A%q: (6H} ~;6}ruFn1P|ndPp[;EbtEVh]zLPKF0Kl&l!Pz9V>w$a0+G@=mA;pYbq-T!a%*0!(WJsH(EhT#'");
             add("'b,a3o{H/5a6(T+nxnZOpni/JUsnXVOOj55 wPxFq}-K=ybI7*#>OWx3VUC9}%!iwWk#gYo.ZI#Q*p}JMiiqngMQLo|mI$(_VJK@w@_xKp8TSC5uCvPfr`'");
             add("'Uf2.Pa(|meCE,{F*Y4d</-Mc=n5) v.[{baMM/0RmWln!j481hIs<pg8H;Qv[4S+?43=g$9#syHm]k.8h&eOnB>E1Wa;hB?&]{a@!DE :}3%*>^FaF%'");
