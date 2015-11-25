@@ -73,9 +73,11 @@ public abstract class AbstractInsert {
             case TIMESTAMP:
                 return new TimestampInsert(tableName);
             case CHAR:
+            case VARCHAR:
             case LONG_VARCHAR:
                 return new CharInsert(tableName);
             case CHAR_FOR_BIT_DATA:
+            case VARCHAR_FOR_BIT_DATA:
             case LONG_VARCHAR_FOR_BIT_DATA:
                 return new CharForBitData(tableName);
             case BOOLEAN:
