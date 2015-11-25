@@ -62,6 +62,30 @@ public abstract class AbstractInsert {
                 return new DoubleInsert(tableName);
             case FLOAT:
                 return new FloatInsert(tableName);
+            case NUMERIC:
+                return new FloatInsert(tableName);
+            case DECIMAL:
+                return new DecimalInsert(tableName);
+            case DATE:
+                return new DateInsert(tableName);
+            case TIME:
+                return new TimeInsert(tableName);
+            case TIMESTAMP:
+                return new TimestampInsert(tableName);
+            case CHAR:
+            case VARCHAR:
+            case LONG_VARCHAR:
+                return new CharInsert(tableName);
+            default:
+                throw new AssertionError("unable to find insert statement for type " + type.toString());
+        }
+    }
+
+    public static AbstractInsert getInsert(String tableName, DataType type, int size) {
+        switch (type) {
+            case CHAR:
+            case VARCHAR:
+                return new CharInsert(tableName, size);
             default:
                 throw new AssertionError("unable to find insert statement for type " + type.toString());
         }
