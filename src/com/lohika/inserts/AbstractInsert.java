@@ -63,7 +63,7 @@ public abstract class AbstractInsert {
             case FLOAT:
                 return new FloatInsert(tableName);
             case NUMERIC:
-                return new FloatInsert(tableName);
+                return new DecimalInsert(tableName);
             case DECIMAL:
                 return new DecimalInsert(tableName);
             case DATE:
@@ -95,6 +95,12 @@ public abstract class AbstractInsert {
             case CHAR_FOR_BIT_DATA:
             case VARCHAR_FOR_BIT_DATA:
                 return new CharForBitData(tableName, size);
+            case FLOAT:
+                return new FloatInsert(tableName, size);
+            case DECIMAL:
+                return new DecimalInsert(tableName, size);
+            case NUMERIC:
+                return new DecimalInsert(tableName, size);
             default:
                 throw new AssertionError("unable to find insert statement for type " + type.toString());
         }

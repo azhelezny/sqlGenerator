@@ -40,6 +40,10 @@ public class FloatInsert extends AbstractInsert {
         add("2.225E-307");
         add("-2.225E-307");
     }
+
+    public FloatInsert(String tableName, int size) {
+        this(tableName);
+    }
 }
 
 
