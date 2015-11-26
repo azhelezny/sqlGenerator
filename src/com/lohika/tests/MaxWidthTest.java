@@ -3,7 +3,6 @@ package com.lohika.tests;
 import com.lohika.CommonPartsGeneration;
 import com.lohika.FileUtils;
 import com.lohika.PatternChanger;
-import com.lohika.TestPattern;
 import com.lohika.inserts.AbstractInsert;
 import com.lohika.types.DataType;
 
@@ -17,7 +16,7 @@ import java.util.Random;
  */
 public class MaxWidthTest {
     private static String path = System.getProperty("user.dir") + "/generatedSQLs/LengthTest/MaxWidth/";
-    private static DataType[] types = {DataType.SMALLINT, DataType.INTEGER, DataType.BIGINT, DataType.REAL, DataType.DOUBLE, DataType.FLOAT};
+    private static DataType[] types = {DataType.SMALLINT, DataType.INTEGER, DataType.BIGINT, DataType.REAL, DataType.DOUBLE, DataType.FLOAT, DataType.DECIMAL, DataType.NUMERIC, DataType.DATE, DataType.TIME, DataType.TIMESTAMP, DataType.CHAR, DataType.VARCHAR, DataType.LONG_VARCHAR, DataType.CHAR_FOR_BIT_DATA, DataType.VARCHAR_FOR_BIT_DATA, DataType.LONG_VARCHAR_FOR_BIT_DATA, DataType.BOOLEAN};
     private static String[] values = {"null", "1", "10", "1000", "0"};
     private final static int length[] = {8, 128, 1048576};
     private final static int width = 1012;
