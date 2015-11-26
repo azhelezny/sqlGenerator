@@ -1,6 +1,8 @@
 package com.lohika;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Pavel on 11/23/15.
@@ -12,7 +14,7 @@ public class PatternChanger {
         // String res = changePattern("pish pish [drish]", mp);
         String result = pattern;
         for (Map.Entry<String, String> change : changes.entrySet())
-            result = result.replaceAll("(?i)\\Q" + change.getKey()+"\\E", change.getValue());
+            result = result.replaceAll(Pattern.quote(change.getKey()), Matcher.quoteReplacement(change.getValue()));
         return result;
     }
 }
