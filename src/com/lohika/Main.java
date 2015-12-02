@@ -1,8 +1,7 @@
 package com.lohika;
 
 import com.lohika.tests.constraints.check.ConstraintsSingleColumnTest;
-import com.lohika.tests.constraints.check.PrimaryKeysMultColumsConstraints;
-import com.lohika.tests.constraints.check.ConstraintsSingleColumnTest;
+import com.lohika.tests.constraints.check.PrimaryKeysMultiColumnsConstraints;
 
 public class Main {
 
@@ -14,6 +13,6 @@ public class Main {
         //MaxWidthTest.createTests();
         ConstraintsSingleColumnTest.createTests();
 
-        PrimaryKeysMultColumsConstraints.createTests();
+        PrimaryKeysMultiColumnsConstraints.createTests();
     }
 }
