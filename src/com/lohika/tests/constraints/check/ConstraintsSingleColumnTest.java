@@ -73,7 +73,7 @@ public class ConstraintsSingleColumnTest {
                             changes.put("[CONSTRAINT]", constraint);
                             changes.put("[CONSTRAINT NO UNDRSCORE]", constraint.replace("_"," "));
 
-                            //Adding inserts
+                            //Adding violation inserts (Not in pattern since not needed if no constraint)
                             if (!additionalConstr.equals("")) changes.put("[ADDITIONAL_CONSTRAINT_VIOLATION_INSERT]",
                                     "insert into [TABLE_NAME]_[INDEX] values ([ADDITIONAL_CONSTRAINT_VIOLATION], [NO_VIOLATION_SECOND_CONSTRAINT2]);");
                             else changes.put("[ADDITIONAL_CONSTRAINT_VIOLATION_INSERT]", "");
@@ -82,7 +82,7 @@ public class ConstraintsSingleColumnTest {
                                     "insert into [TABLE_NAME]_[INDEX] values ([NO_VIOLATION_MAIN_CONSTRAINT2], [SECOND_CONSTRAINT_VIOLATION]);");
                             else changes.put("[SECOND_CONSTRAINT_VIOLATION_INSERT]", "");
 
-                            //Adding violation updates
+                            //Adding violation updates (Not in pattern since not needed if no constraint)
                             if (!additionalConstr.equals("")) changes.put("[ADDITIONAL_CONSTRAINT_VIOLATION_UPDATE]",
                                     "update [TABLE_NAME]_[INDEX] set [CONSTRAINT]_column = [ADDITIONAL_CONSTRAINT_VIOLATION] where [CONSTRAINT]_column = [NO_VIOLATION_MAIN_CONSTRAINT1];");
                             else changes.put("[ADDITIONAL_CONSTRAINT_VIOLATION_UPDATE]", "");
@@ -99,6 +99,12 @@ public class ConstraintsSingleColumnTest {
                                 changes.put(String.valueOf(pair.getKey()), String.valueOf(pair.getValue()));
                                 it.remove();
                             }
+                            //Remove not violating value (violating only for unique and pk) and add violating value null
+                            if (secondConstr.contains("not null") || secondConstr.contains("check (")){
+                                changes.remove("[SECOND_CONSTRAINT_VIOLATION]");
+                                changes.put("[SECOND_CONSTRAINT_VIOLATION]", "null");
+                            }
+
 
                             String test = PatternChanger.changePattern(CONSTRAINTS_TEST_PATTERN, changes);
                             test = PatternChanger.changePattern(test, changes);
@@ -162,7 +168,9 @@ public class ConstraintsSingleColumnTest {
                     "\n" +
                     "-- check if dropped\n" +
                     "select * from [TABLE_NAME]_[INDEX];\n" +
-                    "-- ERROR 42X05: Table/View '[TABLE_NAME]_[INDEX]' does not exist.";
+                    "-- ERROR 42X05: Table/View '[TABLE_NAME]_[INDEX]' does not exist." +
+                    "\n" +
+                    "\n";
 
 
     private static Map<String,String> getDataTypeValues(String type) {
