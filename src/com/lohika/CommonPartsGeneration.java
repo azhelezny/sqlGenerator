@@ -27,6 +27,15 @@ public class CommonPartsGeneration {
         return result.toString();
     }
 
+    public static String generateNotNullColumnsSameType(DataType type, int columnsNumber, int columnsLength) {
+        StringBuilder result = new StringBuilder();
+        String typeString = String.format(type.toFormatString(), (columnsLength < -100) ? "" : "(" + columnsLength + ")");
+        for (int i = 1; i <= columnsNumber; i++)
+            result.append("column_").append(i).append(" ").append(typeString).append(" NOT NULL, ");
+        result.deleteCharAt(result.length() - 1).deleteCharAt(result.length() - 1);
+        return result.toString();
+    }
+
     public static String generatePrimaryKeys(int count, String type) {
         StringBuilder result = new StringBuilder();
         result.append(type.toUpperCase()).append(" (");
