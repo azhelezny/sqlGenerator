@@ -27,9 +27,18 @@ public class CommonPartsGeneration {
         return result.toString();
     }
 
-    public static String generatePrimaryKeys(int count) {
+    public static String generateNotNullColumnsSameType(DataType type, int columnsNumber, int columnsLength) {
         StringBuilder result = new StringBuilder();
-        result.append("PRIMARY KEY (");
+        String typeString = String.format(type.toFormatString(), (columnsLength < -100) ? "" : "(" + columnsLength + ")");
+        for (int i = 1; i <= columnsNumber; i++)
+            result.append("column_").append(i).append(" ").append(typeString).append(" NOT NULL, ");
+        result.deleteCharAt(result.length() - 1).deleteCharAt(result.length() - 1);
+        return result.toString();
+    }
+
+    public static String generatePrimaryKeys(int count, String type) {
+        StringBuilder result = new StringBuilder();
+        result.append(type.toUpperCase()).append(" (");
         for (int i = 1; i <= count; i++)
             result.append("column_").append(i).append(", ");
         result.deleteCharAt(result.length() - 1).deleteCharAt(result.length() - 1);
@@ -37,9 +46,9 @@ public class CommonPartsGeneration {
         return result.toString();
     }
 
-    public static String generatePrimaryKeys(int count, String name) {
+    public static String generatePrimaryKeys(int count, String type, String name) {
         StringBuilder result = new StringBuilder();
-        result.append("CONSTRAINT ").append(name).append(" PRIMARY KEY (");
+        result.append("CONSTRAINT ").append(name).append(type.toUpperCase()).append(" (");
         for (int i = 1; i <= count; i++)
             result.append("column_").append(i).append(", ");
         result.deleteCharAt(result.length() - 1).deleteCharAt(result.length() - 1);
