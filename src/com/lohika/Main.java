@@ -3,6 +3,7 @@ package com.lohika;
 import com.lohika.tests.constraints.check.ConstraintsSingleColumnTest;
 import com.lohika.tests.constraints.check.PrimaryKeysMultColumsConstraints;
 import com.lohika.tests.constraints.check.ConstraintsSingleColumnTest;
+import com.lohika.tests.functions.aggregate.SingleColumnTest;
 
 public class Main {
 
@@ -13,7 +14,7 @@ public class Main {
         //BigintInsert ins = new BigintInsert("pishj");
         //MaxWidthTest.createTests();
         ConstraintsSingleColumnTest.createTests();
-
-        PrimaryKeysMultColumsConstraints.createTests();
+        //SingleColumnTest.createTests();
+        //PrimaryKeysMultColumsConstraints.createTests();
     }
 }

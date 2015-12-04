@@ -16,7 +16,8 @@ public class ConstraintsSingleColumnTest {
     private static String path = System.getProperty("user.dir") + "/generatedSQLs/Constraints/";
     //private static int[] constraintColumsAffectedNumber = {1, 2, 5};
 
-    private static String[] types = {"SMALLINT"};
+    private static String[] types = {"DATE","TIMESTAMP","TIME","SMALLINT", "INTEGER", "BIGINT", "NUMERIC", "NUMERIC(10)", "NUMERIC(10,5)", "DECIMAL", "DECIMAL(10)", "DECIMAL(10,5)", "DOUBLE", "FLOAT", "FLOAT(23)", "REAL", "BOOLEAN", "CHAR(5)", "VARCHAR(5)", "VARCHAR (1) FOR BIT DATA","CHAR (1) FOR BIT DATA"};
+            //"SMALLINT", "INTEGER", "BIGINT", "NUMERIC", "NUMERIC(10)", "NUMERIC(10,5)", "DECIMAL", "DECIMAL(10)", "DECIMAL(10,5)", "DOUBLE", "FLOAT", "FLOAT(23)", "REAL", "BOOLEAN", "CHAR(5)", "VARCHAR(5)"};
 
     private static String[] constraintUnderTest = {"primary_key", "unique"};
 
@@ -57,8 +58,8 @@ public class ConstraintsSingleColumnTest {
 
     public static void createTests() {
         for (String constraint : constraintUnderTest) {
-            int testsCount = 0;
             for (String type : types) {
+                int testsCount = 0;
                 String resultString = "";
                 Map<String, String> changes = new HashMap<String, String>();
                 for (String mainConstr : mainConstraint) {
@@ -68,7 +69,7 @@ public class ConstraintsSingleColumnTest {
                             changes.put("[ADDITIONAL_CONSTRAINT]", additionalConstr);
                             changes.put("[MAIN_CONSTRAINT]", mainConstr);
                             changes.put("[INDEX]", String.valueOf(testsCount));
-                            changes.put("[TABLE_NAME]", type + "_" + constraint);
+                            changes.put("[TABLE_NAME]", type.replace("(","").replace(")","").replace(",","").replace(" ","") + "_" + constraint);
                             changes.put("[DATA_TYPE]", type);
                             changes.put("[CONSTRAINT]", constraint);
                             changes.put("[CONSTRAINT NO UNDRSCORE]", constraint.replace("_"," "));
@@ -118,8 +119,8 @@ public class ConstraintsSingleColumnTest {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                System.out.println("Tests Count: " + testsCount);
             }
-            System.out.println("Tests Count: " + testsCount);
         }
     }
 
@@ -185,6 +186,218 @@ public class ConstraintsSingleColumnTest {
             result.put("[SECOND_CONSTRAINT_VIOLATION]", "-32768");
             result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
         }
+        if (type.equalsIgnoreCase("integer")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "-2147483648");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "2147483647");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "-2147483648");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "2147483647");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "-2147483648");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "-2147483648");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("bigint")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "-9223372036854775808");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "9223372036854775807");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "-9223372036854775808");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "9223372036854775807");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "-9223372036854775808");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "-9223372036854775808");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("decimal")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "999.99");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "0.9999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "999.99");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "0.9999");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "999.99");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "999.99");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("numeric")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "999.99");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "0.9999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "999.99");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "0.9999");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "999.99");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "999.99");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("decimal(10)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "99999999.99");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "0.999999999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "99999999.99");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "0.999999999");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "99999999.99");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "99999999.99");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("numeric(10)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "99999999.99");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "0.999999999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "99999999.99");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "0.999999999");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "99999999.99");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "99999999.99");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("decimal(10,5)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "99999.99999");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "9999.99999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "99999.99999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "9999.99999");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "99999.99999");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "99999.99999");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("numeric(10,5)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "99999.99999");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "9999.99999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "99999.99999");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "9999.99999");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "0");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "99999.99999");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "99999.99999");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("double")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "-1.79769E+308");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "1.79769E+308");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "-1.79769E+308");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "1.79769E+308");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "2.225E-307");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "-1.79769E+308");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "-1.79769E+308");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("float")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "-1.79769E+308");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "1.79769E+308");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "-1.79769E+308");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "1.79769E+308");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "2.225E-307");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "-1.79769E+308");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "-1.79769E+308");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("float(23)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "-3.402E+38");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "3.402E+38");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "-3.402E+38");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "3.402E+38");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "1.175E-37");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "-3.402E+38");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "-3.402E+38");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("real")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "-3.402E+38");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "3.402E+38");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "-3.402E+38");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "3.402E+38");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "1.175E-37");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "-3.402E+38");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "-3.402E+38");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("boolean")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "true");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "false");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "true");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "false");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "true");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "true");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "true");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("char(5)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "'aaaaa'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "'bbbbb'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "'aaaaa'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "'bbbbb'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "'aabbb'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "'aaaaa'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "'aaaaa'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("char(5)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "'aaaaa'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "'bbbbb'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "'aaaaa'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "'bbbbb'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "'aabbb'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "'aaaaa'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "'aaaaa'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("varchar(5)")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "'aaaaa'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "'bbbbb'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "'aaaaa'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "'bbbbb'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "'aabbb'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "'aaaaa'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "'aaaaa'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("time")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "'15:09:02'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "'23:59:59'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "'15:09:02'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "'23:59:59'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "'00:00:00'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "'15:09:02'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "'15:09:02'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("timestamp")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "'2015-01-06 23:39:58.211'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "'2010-01-09 08:43:13.717'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "'2015-01-06 23:39:58.211'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "'2010-01-09 08:43:13.717'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "'2015-01-09 08:43:13.717'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "'2015-01-06 23:39:58.211'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "'2015-01-06 23:39:58.211'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("date")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "'2402-08-30'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "'2015-11-27'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "'2402-08-30'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "'2015-11-27'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "'2016-11-27'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "'2402-08-30'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "'2402-08-30'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+
+        if (type.equalsIgnoreCase("varchar (1) for bit data")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "X'01'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "X'02'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "X'01'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "X'02'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "X'03'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "X'01'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "X'01'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+        if (type.equalsIgnoreCase("char (1) for bit data")){
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT1]", "X'01'");
+            result.put("[NO_VIOLATION_MAIN_CONSTRAINT2]", "X'02'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT1]", "X'01'");
+            result.put("[NO_VIOLATION_SECOND_CONSTRAINT2]", "X'02'");
+            result.put("[NO_VIOLATION_ADDITIONAL_CONSTRAINT]", "X'03'");
+            result.put("[MAIN_CONSTRAINT_VIOLATION]", "X'01'");
+            result.put("[SECOND_CONSTRAINT_VIOLATION]", "X'01'");
+            result.put("[ADDITIONAL_CONSTRAINT_VIOLATION]", "null");
+        }
+
 
         return result;
     }
