@@ -1,9 +1,6 @@
 package com.lohika;
 
-import com.lohika.tests.constraints.check.ConstraintsSingleColumnTest;
-import com.lohika.tests.constraints.check.PrimaryKeysModification;
-import com.lohika.tests.constraints.check.PrimaryKeysMultiColumnsConstraints;
-import com.lohika.tests.constraints.check.UniqueModification;
+import com.lohika.tests.constraints.check.*;
 
 public class Main {
 
@@ -16,6 +13,6 @@ public class Main {
         //ConstraintsSingleColumnTest.createTests();
 
         //PrimaryKeysMultiColumnsConstraints.createTests();
-        UniqueModification.createTests();
+        NotNullTests.createTests();
     }
 }
