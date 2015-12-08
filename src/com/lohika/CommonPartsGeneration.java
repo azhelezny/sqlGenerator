@@ -8,6 +8,18 @@ import java.util.Set;
  * @author Pavel on 11/24/15.
  */
 public class CommonPartsGeneration {
+
+    public static String generateColumns(DataType[] types, String columnPrefix, int columnsLength) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < types.length; i++) {
+            String typeString = String.format(types[i].toFormatString(), (columnsLength < -2) ? "" : "(" + columnsLength + ")");
+            result.append(columnPrefix).append(i+1).append(" ").append(typeString).append(", ");
+        }
+        result.deleteCharAt(result.length() - 1);
+        result.deleteCharAt(result.length() - 1);
+        return result.toString();
+    }
+
     public static String generateColumnsSameType(String type, int columnsNumber) {
         String result = "";
         for (int i = 1; i <= columnsNumber; i++) {

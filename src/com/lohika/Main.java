@@ -1,6 +1,6 @@
 package com.lohika;
 
-import com.lohika.tests.constraints.check.*;
+import com.lohika.tests.comparisons.NumericTypesComparisonTest;
 
 public class Main {
 
@@ -13,6 +13,7 @@ public class Main {
         //ConstraintsSingleColumnTest.createTests();
 
         //PrimaryKeysMultiColumnsConstraints.createTests();
-        NotNullTests.createTests();
+        //NotNullTests.createTests();
+        NumericTypesComparisonTest.createTests();
     }
 }

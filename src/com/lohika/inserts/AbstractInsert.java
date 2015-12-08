@@ -24,7 +24,7 @@ public abstract class AbstractInsert {
 
     protected final String insertPattern = "INSERT INTO %s (%s) values (%s);";
 
-    protected String getRandomValue() {
+    public String getRandomValue() {
         return values.get(new Random().nextInt(values.size()));
     }
 
