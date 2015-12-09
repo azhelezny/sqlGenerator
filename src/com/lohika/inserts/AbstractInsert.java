@@ -79,7 +79,7 @@ public abstract class AbstractInsert {
             case CHAR_FOR_BIT_DATA:
             case VARCHAR_FOR_BIT_DATA:
             case LONG_VARCHAR_FOR_BIT_DATA:
-                return new CharForBitData(tableName);
+                return new CharForBitDataInsert(tableName);
             case BOOLEAN:
                 return new BooleanInsert(tableName);
             default:
@@ -94,7 +94,7 @@ public abstract class AbstractInsert {
                 return new CharInsert(tableName, size);
             case CHAR_FOR_BIT_DATA:
             case VARCHAR_FOR_BIT_DATA:
-                return new CharForBitData(tableName, size);
+                return new CharForBitDataInsert(tableName, size);
             case FLOAT:
                 return new FloatInsert(tableName, size);
             case DECIMAL:

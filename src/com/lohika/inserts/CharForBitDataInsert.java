@@ -4,13 +4,13 @@ package com.lohika.inserts;
  * @author Andrey Zhelezny
  *         Date: 11/24/15
  */
-public class CharForBitData extends AbstractInsert {
-    public CharForBitData(String tableName) {
+public class CharForBitDataInsert extends AbstractInsert {
+    public CharForBitDataInsert(String tableName) {
         super(tableName);
         fill(1);
     }
 
-    public CharForBitData(String tableName, int size) {
+    public CharForBitDataInsert(String tableName, int size) {
         super(tableName);
         fill(size);
     }

@@ -3,7 +3,10 @@ package com.lohika.tests.comparisons;
 import com.lohika.CommonPartsGeneration;
 import com.lohika.FileUtils;
 import com.lohika.PatternChanger;
-import com.lohika.inserts.*;
+import com.lohika.inserts.AbstractInsert;
+import com.lohika.inserts.BooleanInsert;
+import com.lohika.inserts.CharForBitDataInsert;
+import com.lohika.inserts.CharInsert;
 import com.lohika.types.DataType;
 
 import java.io.IOException;
@@ -13,9 +16,8 @@ import java.util.*;
  * @author Andrey Zhelezny
  *         Date: 12/7/15
  */
-public class OtherTypesComparisonTest {
+public class NegativeOtherTypesComparisonTest {
     private static String path = System.getProperty("user.dir") + "/generatedSQLs/Comparison/";
-    private static Map<DataType, DataType[]> otherTypesMapPositive = new HashMap<DataType, DataType[]>();
     private static Map<DataType, DataType[]> otherTypesMapNegative = new HashMap<DataType, DataType[]>();
 
     private static Set<DataType> typesToTest = new HashSet<DataType>();
@@ -28,18 +30,16 @@ public class OtherTypesComparisonTest {
     }
 
     static {
-        typesToTest.add(DataType.BOOLEAN);
-        typesToTest.add(DataType.CHAR_FOR_BIT_DATA);
-        typesToTest.add(DataType.VARCHAR_FOR_BIT_DATA);
+        typesToTest.add(DataType.LONG_VARCHAR);
+        typesToTest.add(DataType.LONG_VARCHAR_FOR_BIT_DATA);
+        typesToTest.add(DataType.BLOB);
+        typesToTest.add(DataType.CLOB);
 
-        otherTypesMapPositive.put(DataType.BOOLEAN, new DataType[]{DataType.BOOLEAN, DataType.BOOLEAN});
-        otherTypesMapNegative.put(DataType.BOOLEAN, arrayToType(DataType.BOOLEAN, DataType.getAllTypes(DataType.BOOLEAN)));
 
-        otherTypesMapPositive.put(DataType.CHAR_FOR_BIT_DATA, new DataType[]{DataType.CHAR_FOR_BIT_DATA, DataType.CHAR_FOR_BIT_DATA, DataType.VARCHAR_FOR_BIT_DATA});
-        otherTypesMapNegative.put(DataType.CHAR_FOR_BIT_DATA, arrayToType(DataType.CHAR_FOR_BIT_DATA, DataType.getAllTypes(DataType.CHAR_FOR_BIT_DATA, DataType.VARCHAR_FOR_BIT_DATA)));
-
-        otherTypesMapPositive.put(DataType.VARCHAR_FOR_BIT_DATA, new DataType[]{DataType.VARCHAR_FOR_BIT_DATA, DataType.CHAR_FOR_BIT_DATA, DataType.VARCHAR_FOR_BIT_DATA});
-        otherTypesMapNegative.put(DataType.VARCHAR_FOR_BIT_DATA, arrayToType(DataType.VARCHAR_FOR_BIT_DATA, DataType.getAllTypes(DataType.CHAR_FOR_BIT_DATA, DataType.VARCHAR_FOR_BIT_DATA)));
+        otherTypesMapNegative.put(DataType.LONG_VARCHAR, DataType.getAllTypes());
+        otherTypesMapNegative.put(DataType.LONG_VARCHAR_FOR_BIT_DATA, DataType.getAllTypes());
+        otherTypesMapNegative.put(DataType.BLOB, DataType.getAllTypes());
+        otherTypesMapNegative.put(DataType.CLOB, DataType.getAllTypes());
     }
 
     private static String getOperators(int tableSize, String tableName, String message) {
@@ -104,25 +104,6 @@ public class OtherTypesComparisonTest {
             resultString = "";
             Map<String, String> changes = new HashMap<String, String>();
 
-            String test1 = "";
-            for (int t = 1; t < otherTypesMapPositive.get(type).length; t++) {
-                DataType targetType = otherTypesMapPositive.get(type)[t];
-                String tableName = type.toString() + "_VS_" + targetType.toString();
-                test1 += "-- ---------- CASE: " + type.toString() + " VS " + targetType.toString() + "\n";
-                test1 += "-- splicetest: ignore-output start\n";
-                test1 += "DROP TABLE " + tableName + ";\n";
-                test1 += "-- splicetest: ignore-output stop\n";
-                test1 += getTable(new DataType[]{type, targetType}, tableName, 25) + "\n\n";
-                for (int i = 0; i < 10; i++)
-                    test1 += getInsert(tableName, new DataType[]{type, targetType}) + "\n";
-                test1 += "\n\n";
-                test1 += getOperators(2, tableName, "All OK");
-                test1 += "-- splicetest: ignore-output start\n";
-                test1 += "DROP TABLE " + tableName + ";\n";
-                test1 += "-- splicetest: ignore-output stop\n\n";
-            }
-
-
             String tableName = type.toString() + "_NEGATIVE_CHECK";
 
             String test3 = "-- splicetest: ignore-output start\n";
@@ -132,8 +113,6 @@ public class OtherTypesComparisonTest {
             test3 += getOperators(otherTypesMapNegative.get(type).length, tableName, "ERROR 42818: Comparisons between '[DATA_TYPE]' and '[TESTING TYPE]' are not supported. Types must be comparable...");
 
             changes.put("[DATA_TYPE]", type.toString().replace("_", " "));
-            changes.put("[TEST_1]", test1);
-            changes.put("[TEST_2]", "");
             changes.put("[TEST_3]", test3);
             String test = PatternChanger.changePattern(COMPARISON_TEST_PATTERN, changes);
             resultString = resultString + test + "\n";
@@ -162,10 +141,7 @@ public class OtherTypesComparisonTest {
                     "-- (Target functional - Comparisons)\n" +
                     "-- (Data type: [DATA_TYPE])\n" +
                     "-- ---------------------------------------------------------------------------\n" +
-                    "-- ********* TEST GROUP 1: 'GREEN WAY' CHECK\n" +
-                    "[TEST_1]\n" +
-                    "\n" +
-                    "-- ********* TEST 3: NEGATIVE TESTS ON NON-SUPPORTED OPERATORS\n" +
+                    "-- ********* TEST 1: NEGATIVE TESTS ON NON-SUPPORTED OPERATORS\n" +
                     "[TEST_3]\n";
 
 

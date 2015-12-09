@@ -1,7 +1,7 @@
 package com.lohika;
 
-import com.lohika.tests.comparisons.CharacterTypesComparisonTest;
-import com.lohika.tests.comparisons.NumericTypesComparisonTest;
+import com.lohika.tests.comparisons.NegativeOtherTypesComparisonTest;
+import com.lohika.tests.comparisons.OtherTypesComparisonTest;
 
 public class Main {
 
@@ -15,6 +15,8 @@ public class Main {
 
         //PrimaryKeysMultiColumnsConstraints.createTests();
         //NotNullTests.createTests();
-        CharacterTypesComparisonTest.createTests();
+        //CharacterTypesComparisonTest.createTests();
+        //OtherTypesComparisonTest.createTests();
+        NegativeOtherTypesComparisonTest.createTests();
     }
 }
