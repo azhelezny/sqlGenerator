@@ -13,7 +13,7 @@ import java.util.*;
  * @author Andrey Zhelezny
  *         Date: 12/7/15
  */
-public class CharacterTypesComparisonTest {
+public class OtherTypesComparisonTest {
     private static String path = System.getProperty("user.dir") + "/generatedSQLs/Comparison/";
     private static Map<DataType, DataType[]> charTypesMapPositive = new HashMap<DataType, DataType[]>();
     private static Map<DataType, DataType[]> charTypesMapNegativeFormat = new HashMap<DataType, DataType[]>();

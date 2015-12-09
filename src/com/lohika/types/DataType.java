@@ -56,7 +56,9 @@ public enum DataType {
         List<DataType> almostResult = new ArrayList<DataType>(Arrays.asList(DataType.values()));
         for (DataType type : exclude)
             almostResult.remove(type);
-        return (DataType[]) almostResult.toArray();
+        DataType[]result = new DataType[almostResult.size()];
+        result = almostResult.toArray(result);
+        return result;
     }
 
     public static DataType getRandomDataType(DataType... exclude) {

@@ -11,18 +11,18 @@ public enum StringComparisonOperators {
     GREATER_OR_EQUALS(" %s >= %s "),
     LESSER_OR_EQUALS(" %s <= %s "),
     NOT_EQUALS(" %s <> %s "),
+    LIKE(" %s LIKE '%s'"),
     BETWEEN(" %s BETWEEN %s AND %s "),
     NOT_BETWEEN(" %s NOT BETWEEN %s AND %s "),
     IN(" %s IN ( %s, %s )"),
     NOT_IN(" %s NOT IN ( %s, %s )");
 
-
     public static StringComparisonOperators[] getTwoArgsOperators() {
         return new StringComparisonOperators[]{GREATER, LESSER, EQUALS, GREATER_OR_EQUALS, LESSER_OR_EQUALS, NOT_EQUALS};
     }
 
-    public static StringComparisonOperators[] getThreeArgsOperators() {
-        return new StringComparisonOperators[]{BETWEEN, NOT_BETWEEN, IN, NOT_IN};
+    public static StringComparisonOperators[] getSpecialOperators() {
+        return new StringComparisonOperators[]{LIKE};
     }
 
     private final String operator;
