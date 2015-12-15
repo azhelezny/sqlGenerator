@@ -85,6 +85,15 @@ public class CommonPartsGeneration {
                 case DOUBLE:
                     values.append(new DoubleInsert(tableName).getRandomValue()).append(", ");
                     break;
+                case DATE:
+                    values.append(new DateInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case TIME:
+                    values.append(new TimeInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case TIMESTAMP:
+                    values.append(new TimestampInsert(tableName).getRandomValue()).append(", ");
+                    break;
                 default:
                     throw new NullPointerException("Incorrect type:" + type.toString());
             }

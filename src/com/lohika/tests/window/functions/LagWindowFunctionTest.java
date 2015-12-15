@@ -14,9 +14,9 @@ import static com.lohika.tests.window.functions.WFUtils.*;
  *         Date: 12/10/15
  */
 @SuppressWarnings("Convert2Diamond")
-public class LeadWindowFunctionTest {
+public class LagWindowFunctionTest {
 
-    private static String path = System.getProperty("user.dir") + "/generatedSQLs/WindowFunctions/LEAD/";
+    private static String path = System.getProperty("user.dir") + "/generatedSQLs/WindowFunctions/LAG/";
 
     //private static List<DataType> typesToTest = new ArrayList<DataType>(Arrays.asList(new DataType[]{DataType.SMALLINT})); //new ArrayList<DataType>(Arrays.asList(DataType.getAllTypes()));
     private static List<DataType> typesToTest = new ArrayList<DataType>(Arrays.asList(DataType.getAllTypes()));
@@ -26,19 +26,19 @@ public class LeadWindowFunctionTest {
         StringBuilder result = new StringBuilder("-- ************** OFFSET, DEFAULT VALUES AND ORDERING TESTS **************\n");
         StringBuilder positiveCases = new StringBuilder("-- *** POSITIVE CASES ***\n");
         StringBuilder negativeCases = new StringBuilder("-- *** NEGATIVE CASES ***\n");
-        WFUtils.DefaultValueType dvt = WFUtils.DefaultValueType.Absent;
-        for (WFUtils.Offset off : WFUtils.Offset.values())
-            for (WFUtils.OrderBy ob : WFUtils.OrderBy.values()) {
-                if (!off.isPositive() || dvt.equals(WFUtils.DefaultValueType.NotMatched)) {
+        DefaultValueType dvt = DefaultValueType.Absent;
+        for (Offset off : Offset.values())
+            for (OrderBy ob : OrderBy.values()) {
+                if (!off.isPositive() || dvt.equals(DefaultValueType.NotMatched)) {
                     negativeCases.append("-- (NEGATIVE) CASE: Default value type [").append(dvt.toString()).append("] Offset [").append(off.get()).append("] Ordering type [").append(ob.toString()).append("]\n");
-                    negativeCases.append("SELECT column_1, LEAD(column_1");
-                    if (!off.equals(WFUtils.Offset.Absent))
+                    negativeCases.append("SELECT column_1, LAG(column_1");
+                    if (!off.equals(Offset.Absent))
                         negativeCases.append(",").append(off.get());
                     negativeCases.append(") OVER (").append(ob.get()).append(") from ").append(tableName).append(";\n\n");
                 } else {
                     positiveCases.append("-- (POSITIVE) CASE: Default value type [").append(dvt.toString()).append("] Offset [").append(off.get()).append("] Ordering type [").append(ob.toString()).append("]\n");
-                    positiveCases.append("SELECT column_1, LEAD(column_1");
-                    if (!off.equals(WFUtils.Offset.Absent))
+                    positiveCases.append("SELECT column_1, LAG(column_1");
+                    if (!off.equals(Offset.Absent))
                         positiveCases.append(",").append(off.get());
                     positiveCases.append(") OVER (").append(ob.get()).append(") from ").append(tableName).append(";\n\n");
                 }
@@ -49,17 +49,17 @@ public class LeadWindowFunctionTest {
 
     public static String getPartitionClauses(String tableName) {
         StringBuilder result = new StringBuilder("-- ************** PARTITION BY TESTS **************\n");
-        for (WFUtils.PartitionByType partition : WFUtils.PartitionByType.values())
-            for (WFUtils.OrderBy ob : WFUtils.OrderBy.values()) {
+        for (PartitionByType partition : PartitionByType.values())
+            for (OrderBy ob : OrderBy.values()) {
                 result.append("-- (POSITIVE) CASE: PARTITION TYPE [").append(partition.get()).append("]\n");
-                result.append("SELECT column_1, column_2, LEAD(column_1) OVER (").append(partition.get()).append(" ").append(ob.get()).append(") from ").append(tableName).append(";\n\n");
+                result.append("SELECT column_1, column_2, LAG(column_1) OVER (").append(partition.get()).append(" ").append(ob.get()).append(") from ").append(tableName).append(";\n\n");
             }
         return result.toString();
     }
 
     public static String getRowsFrameClauses(String tableName) {
         String result = "-- ************** FRAME CLAUSE - ROWS STATEMENT TESTS **************\n";
-        String pattern = "SELECT column_1, LEAD(column_1) OVER(%s) FROM " + tableName + ";\n";
+        String pattern = "SELECT column_1, LAG(column_1) OVER(%s) FROM " + tableName + ";\n";
         result += "-- ROWS 'Green' cases\n";
         result += String.format(pattern, "ORDER BY column_1 ASC NULLS FIRST ROWS 0 PRECEDING");
         result += String.format(pattern, "ORDER BY column_1 ASC NULLS FIRST ROWS 1 PRECEDING");
@@ -97,7 +97,7 @@ public class LeadWindowFunctionTest {
 
     public static String getRangeFrameClauses(String tableName) {
         String result = "-- ************** FRAME CLAUSE - RANGE STATEMENT TESTS **************\n";
-        String pattern = "SELECT column_1, LEAD(column_1) OVER(%s) FROM " + tableName + ";\n";
+        String pattern = "SELECT column_1, LAG(column_1) OVER(%s) FROM " + tableName + ";\n";
         result += "-- RANGE 'Green' cases\n";
         result += String.format(pattern, "ORDER BY column_1 ASC NULLS FIRST RANGE CURRENT ROW");
         result += String.format(pattern, "PARTITION BY column_1 ORDER BY column_1 ASC NULLS FIRST RANGE CURRENT ROW");
@@ -118,14 +118,14 @@ public class LeadWindowFunctionTest {
     public static String getWindowClause(String tableName) {
         return "-- ************** WINDOW CLAUSE TESTS **************\n" +
                 "-- (POSITIVE) CASE: Windows clause\n" +
-                "SELECT column_1, column_2, LEAD(column_1) OVER  w FROM " + tableName + " WINDOW w AS (PARTITION BY column_2 ORDER BY column_1);\n\n";
+                "SELECT column_1, column_2, LAG(column_1) OVER  w FROM " + tableName + " WINDOW w AS (PARTITION BY column_2 ORDER BY column_1);\n\n";
 
     }
 
     public static void createTests() {
         for (DataType type : typesToTest) {
             Map<String, String> changes = new HashMap<String, String>();
-            String tableName = "LEAD_" + type.toString() + "_table";
+            String tableName = "LAG_" + type.toString() + "_table";
             changes.put("[DATA_TYPE]", type.toString().replace("_", " "));
             changes.put("[DROP_TABLE]", String.format("-- splicetest: ignore-output start\nDROP TABLE %s;\n-- splicetest: ignore-output stop\n", tableName));
             changes.put("[CREATE_TABLE]", getTable(new DataType[]{type, type}, tableName, 8));

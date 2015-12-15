@@ -2,6 +2,7 @@ package com.lohika;
 
 import com.lohika.tests.comparisons.NegativeOtherTypesComparisonTest;
 import com.lohika.tests.comparisons.OtherTypesComparisonTest;
+import com.lohika.tests.window.functions.LagWindowFunctionTest;
 import com.lohika.tests.window.functions.LeadWindowFunctionTest;
 
 public class Main {
@@ -20,5 +21,6 @@ public class Main {
         //OtherTypesComparisonTest.createTests();
         //NegativeOtherTypesComparisonTest.createTests();
         LeadWindowFunctionTest.createTests();
+        LagWindowFunctionTest.createTests();
     }
 }
