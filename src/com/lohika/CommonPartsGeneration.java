@@ -10,6 +10,8 @@ import java.util.Set;
  */
 public class CommonPartsGeneration {
 
+    private static final String insertPattern = "INSERT INTO %s (%s) values (%s);";
+
     public static String generateColumns(DataType[] types, String columnPrefix, int columnsLength) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < types.length; i++) {
@@ -33,8 +35,63 @@ public class CommonPartsGeneration {
         return result;
     }
 
+    public static String getSmallInsert(String tableName, DataType[] types) {
+        StringBuilder columns = new StringBuilder();
+        for (int i = types.length; i != 0; i--)
+            columns.append("column_").append(i).append(", ");
+        columns.deleteCharAt(columns.length() - 1);
+        columns.deleteCharAt(columns.length() - 1);
+
+        StringBuilder values = new StringBuilder();
+        for (int i = types.length - 1; i >= 0; i--) {
+            DataType type = types[i];
+            assert type != null;
+            switch (type) {
+                case BOOLEAN:
+                    values.append(new BooleanInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case CHAR_FOR_BIT_DATA:
+                case VARCHAR_FOR_BIT_DATA:
+                case LONG_VARCHAR_FOR_BIT_DATA:
+                case BLOB:
+                    values.append(new CharForBitDataInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case LONG_VARCHAR:
+                case CHAR:
+                case VARCHAR:
+                case CLOB:
+                    values.append(new CharInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case SMALLINT:
+                case INTEGER:
+                case BIGINT:
+                case FLOAT:
+                case REAL:
+                case DECIMAL:
+                case NUMERIC:
+                case DOUBLE:
+                    values.append(new SmallintInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case DATE:
+                    values.append(new DateInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case TIME:
+                    values.append(new TimeInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                case TIMESTAMP:
+                    values.append(new TimestampInsert(tableName).getRandomValue()).append(", ");
+                    break;
+                default:
+                    throw new NullPointerException("Incorrect type:" + type.toString());
+            }
+        }
+        values.deleteCharAt(values.length() - 1);
+        values.deleteCharAt(values.length() - 1);
+
+        return String.format(insertPattern, tableName, columns.toString(), values.toString());
+    }
+
     public static String getInsert(String tableName, DataType[] types) {
-        String insertPattern = "INSERT INTO %s (%s) values (%s);";
 
         StringBuilder columns = new StringBuilder();
         for (int i = types.length; i != 0; i--)

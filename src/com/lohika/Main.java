@@ -24,6 +24,9 @@ public class Main {
         //FirstValueWindowFunctionTest.createTests();
         //LastValueWindowFunctionTest.createTests();
         //MaxWindowFunctionTest.createTests();
-        MinWindowFunctionTest.createTests();
+        //MinWindowFunctionTest.createTests();
+        //AvgWindowFunctionTest.createTests();
+        //CountWindowFunctionTest.createTests();
+        SumWindowFunctionTest.createTests();
     }
 }

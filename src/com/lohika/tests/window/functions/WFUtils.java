@@ -176,4 +176,13 @@ public class WFUtils {
         }
         return result;
     }
+
+    public static String getSmallInserts(String tableName, DataType[] types, int insertsCount) {
+        assert insertsCount >= 1;
+        String result = CommonPartsGeneration.getInsert(tableName, types) + "\n";
+        for (int i = 1; i < insertsCount; i++) {
+            result += CommonPartsGeneration.getSmallInsert(tableName, types) + "\n";
+        }
+        return result;
+    }
 }
