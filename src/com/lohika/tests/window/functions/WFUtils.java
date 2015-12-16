@@ -8,8 +8,24 @@ import com.lohika.types.DataType;
  *         Date: 12/15/15
  */
 public class WFUtils {
-    private static int rowCount = 10;
+    public static int rowCount = 30;
     private static final long maxOffsetValue = 2147483647;
+
+    public enum NullsPolicy {
+        Ignore("IGNORE NULLS"),
+        Respect("RESPECT NULLS"),
+        Absent("");
+
+        private final String value;
+
+        NullsPolicy(String s) {
+            this.value = s;
+        }
+
+        public String get() {
+            return this.value;
+        }
+    }
 
     public enum Offset {
         Zero("0", false),
@@ -74,6 +90,23 @@ public class WFUtils {
 
         public String get() {
             return value;
+        }
+    }
+
+    public enum MaxMinOptions {
+        Distinct("DISTINCT"),
+        All("ALL"),
+        Absent("");
+
+
+        private final String value;
+
+        MaxMinOptions(String s) {
+            this.value = s;
+        }
+
+        public String get() {
+            return this.value;
         }
     }
 
