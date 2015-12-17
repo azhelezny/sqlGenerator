@@ -27,6 +27,9 @@ public class Main {
         //MinWindowFunctionTest.createTests();
         //AvgWindowFunctionTest.createTests();
         //CountWindowFunctionTest.createTests();
-        SumWindowFunctionTest.createTests();
+        //SumWindowFunctionTest.createTests();
+        //RankWindowFunctionTest.createTests();
+        //DenseRankWindowFunctionTest.createTests();
+        RowNumberWindowFunctionTest.createTests();
     }
 }
