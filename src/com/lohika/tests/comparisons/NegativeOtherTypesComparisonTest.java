@@ -12,6 +12,8 @@ import com.lohika.types.DataType;
 import java.io.IOException;
 import java.util.*;
 
+import static com.lohika.tests.comparisons.ComparisonUtils.arrayToType;
+
 /**
  * @author Andrey Zhelezny
  *         Date: 12/7/15
@@ -36,18 +38,18 @@ public class NegativeOtherTypesComparisonTest {
         typesToTest.add(DataType.CLOB);
 
 
-        otherTypesMapNegative.put(DataType.LONG_VARCHAR, DataType.getAllTypes());
-        otherTypesMapNegative.put(DataType.LONG_VARCHAR_FOR_BIT_DATA, DataType.getAllTypes());
-        otherTypesMapNegative.put(DataType.BLOB, DataType.getAllTypes());
-        otherTypesMapNegative.put(DataType.CLOB, DataType.getAllTypes());
+        otherTypesMapNegative.put(DataType.LONG_VARCHAR, arrayToType(DataType.LONG_VARCHAR, DataType.getAllTypes()));
+        otherTypesMapNegative.put(DataType.LONG_VARCHAR_FOR_BIT_DATA, arrayToType(DataType.LONG_VARCHAR_FOR_BIT_DATA, DataType.getAllTypes()));
+        otherTypesMapNegative.put(DataType.BLOB, arrayToType(DataType.BLOB, DataType.getAllTypes()));
+        otherTypesMapNegative.put(DataType.CLOB, arrayToType(DataType.CLOB, DataType.getAllTypes()));
     }
 
     private static String getOperators(int tableSize, String tableName, String message) {
         StringBuilder operators = new StringBuilder();
         for (int i = 2; i <= tableSize; i++) {
             for (StringComparisonOperators operator : StringComparisonOperators.getTwoArgsOperators()) {
-                operators.append("SELECT column_1, column_").append(i).append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "column_" + i).trim()).append(";\n");
-                operators.append("-- ").append(message).append("\n");
+                operators.append("-- splicetest: ignore-order start\nSELECT column_1, column_").append(i).append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "column_" + i).trim()).append(";\n");
+                operators.append("-- splicetest: ignore-order stop\n-- ").append(message).append("\n");
             }
         }
         return operators.toString();

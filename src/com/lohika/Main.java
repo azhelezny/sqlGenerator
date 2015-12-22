@@ -1,6 +1,8 @@
 package com.lohika;
 
+import com.lohika.tests.comparisons.CharacterTypesComparisonTest;
 import com.lohika.tests.comparisons.NegativeOtherTypesComparisonTest;
+import com.lohika.tests.comparisons.NumericTypesComparisonTest;
 import com.lohika.tests.comparisons.OtherTypesComparisonTest;
 import com.lohika.tests.window.functions.*;
 
@@ -16,9 +18,10 @@ public class Main {
 
         //PrimaryKeysMultiColumnsConstraints.createTests();
         //NotNullTests.createTests();
-        //CharacterTypesComparisonTest.createTests();
-        //OtherTypesComparisonTest.createTests();
-        //NegativeOtherTypesComparisonTest.createTests();
+        CharacterTypesComparisonTest.createTests();
+        OtherTypesComparisonTest.createTests();
+        NegativeOtherTypesComparisonTest.createTests();
+        NumericTypesComparisonTest.createTests();
         //LeadWindowFunctionTest.createTests();
         //LagWindowFunctionTest.createTests();
         //FirstValueWindowFunctionTest.createTests();
@@ -30,6 +33,6 @@ public class Main {
         //SumWindowFunctionTest.createTests();
         //RankWindowFunctionTest.createTests();
         //DenseRankWindowFunctionTest.createTests();
-        RowNumberWindowFunctionTest.createTests();
+        //RowNumberWindowFunctionTest.createTests();
     }
 }

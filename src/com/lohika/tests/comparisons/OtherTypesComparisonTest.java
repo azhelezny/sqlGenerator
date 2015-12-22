@@ -9,6 +9,8 @@ import com.lohika.types.DataType;
 import java.io.IOException;
 import java.util.*;
 
+import static com.lohika.tests.comparisons.ComparisonUtils.arrayToType;
+
 /**
  * @author Andrey Zhelezny
  *         Date: 12/7/15
@@ -19,13 +21,6 @@ public class OtherTypesComparisonTest {
     private static Map<DataType, DataType[]> otherTypesMapNegative = new HashMap<DataType, DataType[]>();
 
     private static Set<DataType> typesToTest = new HashSet<DataType>();
-
-    private static DataType[] arrayToType(DataType type, DataType[] types) {
-        DataType[] result = new DataType[types.length + 1];
-        result[0] = type;
-        System.arraycopy(types, 0, result, 1, types.length + 1 - 1);
-        return result;
-    }
 
     static {
         typesToTest.add(DataType.BOOLEAN);
@@ -46,8 +41,8 @@ public class OtherTypesComparisonTest {
         StringBuilder operators = new StringBuilder();
         for (int i = 2; i <= tableSize; i++) {
             for (StringComparisonOperators operator : StringComparisonOperators.getTwoArgsOperators()) {
-                operators.append("SELECT column_1, column_").append(i).append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "column_" + i).trim()).append(";\n");
-                operators.append("-- ").append(message).append("\n");
+                operators.append("-- splicetest: ignore-order start\nSELECT column_1, column_").append(i).append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "column_" + i).trim()).append(";\n");
+                operators.append("-- splicetest: ignore-order stop\n-- ").append(message).append("\n");
             }
         }
         return operators.toString();

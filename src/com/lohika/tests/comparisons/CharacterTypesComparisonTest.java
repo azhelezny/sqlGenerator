@@ -60,14 +60,14 @@ public class CharacterTypesComparisonTest {
         StringBuilder operators = new StringBuilder();
         for (int i = 2; i <= tableSize; i++) {
             for (StringComparisonOperators operator : StringComparisonOperators.getTwoArgsOperators()) {
-                operators.append("SELECT column_1, column_").append(i).append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "column_" + i).trim()).append(";\n");
-                operators.append("-- ").append(message).append("\n");
+                operators.append("-- splicetest: ignore-order start\nSELECT column_1, column_").append(i).append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "column_" + i).trim()).append(";\n");
+                operators.append("-- splicetest: ignore-order stop\n-- ").append(message).append("\n");
             }
         }
         if (useAlt)
             for (StringComparisonOperators operator : StringComparisonOperators.getSpecialOperators()) {
-                operators.append("SELECT column_1").append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "%").trim()).append(";\n");
-                operators.append("-- All OK\n");
+                operators.append("-- splicetest: ignore-order start\nSELECT column_1").append(" FROM ").append(tableName).append(" WHERE ").append(operator.getFormat("column_1", "%").trim()).append(";\n");
+                operators.append("-- splicetest: ignore-order stop\n-- All OK\n");
             }
         return operators.toString();
     }
